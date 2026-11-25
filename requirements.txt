@@ -1,0 +1,5 @@
+python-telegram-bot[job-queue]==22.8
+gspread
+google-auth
+python-dotenv
+matplotlib
