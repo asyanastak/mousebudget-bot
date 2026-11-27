@@ -28,82 +28,29 @@
       overflow-x: hidden;
       height: 100vh;
     }
-
-    /* ---------- Декоративный фон в стиле Aivo ---------- */
     .bg-mesh {
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      overflow: hidden;
+      position: fixed; inset: 0; z-index: 0; overflow: hidden;
       background: radial-gradient(circle at 50% 0%, #1a1a1a 0%, #0a0a0a 60%, #050505 100%);
     }
-    .blob {
-      position: absolute;
-      filter: blur(60px);
-      opacity: 0.35;
-      border-radius: 50%;
-      z-index: 1;
-    }
-    .blob-1 { top: -10%; left: -10%; width: 40vw; height: 40vw; background: conic-gradient(from 0deg, #ff9f00, #ff6b00, #ff453a, #ff9f00); animation: drift1 12s ease-in-out infinite; }
-    .blob-2 { bottom: -5%; right: -5%; width: 35vw; height: 35vw; background: conic-gradient(from 90deg, #ffcc00, #ff6b00, #ff453a); animation: drift2 15s ease-in-out infinite reverse; }
-    .blob-3 { top: 30%; left: 40%; width: 25vw; height: 25vw; background: radial-gradient(circle, rgba(255,159,0,0.4), transparent 70%); animation: drift3 10s ease-in-out infinite; }
-    @keyframes drift1 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(30px,40px) scale(1.15); } }
-    @keyframes drift2 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-30px,-40px) scale(1.1); } }
-    @keyframes drift3 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(20px,-30px) scale(1.05); } }
-
-    /* Абстрактные человекообразные фигуры (SVG) */
-    .figures {
-      position: fixed;
-      inset: 0;
-      z-index: 2;
-      pointer-events: none;
-      overflow: hidden;
-    }
-    .figure { position: absolute; opacity: 0.08; filter: blur(12px); }
-    .fig-person-1 { top: 10%; right: 8%; width: 220px; height: 340px; z-index: 2; }
-    .fig-person-2 { bottom: 15%; left: 6%; width: 180px; height: 280px; z-index: 2; }
-
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 16px;
-      background: rgba(10,10,10,0.5);
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border);
-    }
+    .blob { position: absolute; filter: blur(50px); opacity: 0.4; border-radius: 50%; z-index: 1; }
+    .blob-1 { top: -5%; left: -5%; width: 45vw; height: 45vw; background: conic-gradient(from 0deg, #ff9f00, #ff6b00, #ff453a, #ff9f00); animation: drift1 10s ease-in-out infinite; }
+    .blob-2 { bottom: -10%; right: -10%; width: 40vw; height: 40vw; background: conic-gradient(from 90deg, #ffcc00, #ff6b00, #ff453a); animation: drift2 13s ease-in-out infinite reverse; }
+    .blob-3 { top: 25%; left: 35%; width: 30vw; height: 30vw; background: radial-gradient(circle, rgba(255,159,0,0.35), transparent 70%); animation: drift3 9s ease-in-out infinite; }
+    @keyframes drift1 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(25px,35px) scale(1.1); } }
+    @keyframes drift2 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-25px,-35px) scale(1.08); } }
+    @keyframes drift3 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(15px,-25px) scale(1.05); } }
+    .figures { position: fixed; inset: 0; z-index: 2; pointer-events: none; overflow: hidden; }
+    .figure { position: absolute; opacity: 0.25; filter: blur(8px); }
+    .fig-person-1 { top: 8%; right: 6%; width: 260px; height: 380px; z-index: 2; }
+    .fig-person-2 { bottom: 10%; left: 8%; width: 220px; height: 320px; z-index: 2; }
+    header { position: sticky; top: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between; padding: 16px; background: rgba(10,10,10,0.5); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
     .app-title { font-size: 17px; font-weight: 600; letter-spacing: -0.5px; }
-    .period-select {
-      background: var(--card);
-      border: 1px solid var(--border);
-      color: var(--text);
-      padding: 6px 10px;
-      border-radius: 10px;
-      font-size: 13px;
-      outline: none;
-    }
-
+    .period-select { background: var(--card); border: 1px solid var(--border); color: var(--text); padding: 6px 10px; border-radius: 10px; font-size: 13px; outline: none; }
     .screen { display: none; min-height: calc(100vh - 130px); padding: 16px; animation: fadeIn 0.35s ease; }
     .screen.active { display: block; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
-
-    /* ---------- Карточки (стекло + свечение) ---------- */
-    .card {
-      position: relative;
-      background: linear-gradient(145deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
-      border: 1px solid var(--border);
-      border-radius: 22px;
-      padding: 18px;
-      margin-bottom: 14px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.45), inset 0 0 0 1px rgba(255,255,255,0.03);
-      z-index: 10;
-    }
+    .card { position: relative; background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01)); border: 1px solid var(--border); border-radius: 22px; padding: 18px; margin-bottom: 14px; box-shadow: 0 20px 60px rgba(0,0,0,0.45), inset 0 0 0 1px rgba(255,255,255,0.03); z-index: 10; }
     .card-title { font-size: 13px; color: var(--text-muted); margin-bottom: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
-
-    /* ---------- Сводка ---------- */
     .summary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
     .summary-item { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 16px; text-align: center; }
     .summary-item.big { grid-column: span 2; }
@@ -113,20 +60,8 @@
     .expense { color: var(--danger); text-shadow: 0 0 20px rgba(255,69,58,0.25); }
     .debt { color: var(--warning); text-shadow: 0 0 20px rgba(255,204,0,0.25); }
     .balance { color: var(--text); text-shadow: 0 0 20px rgba(255,159,0,0.2); }
-
-    /* ---------- Операции ---------- */
     .op-list { margin-bottom: 80px; }
-    .op-item {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 14px 16px;
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      transition: transform 0.15s, box-shadow 0.15s;
-    }
+    .op-item { background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 14px 16px; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between; transition: transform 0.15s, box-shadow 0.15s; }
     .op-item:active { transform: scale(0.98); box-shadow: 0 12px 40px rgba(0,0,0,0.3); }
     .op-info { flex: 1; }
     .op-category { font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 3px; letter-spacing: -0.3px; }
@@ -145,8 +80,6 @@
     .empty-icon { font-size: 56px; margin-bottom: 14px; display: block; opacity: 0.5; }
     .empty-text { font-size: 15px; font-weight: 500; color: var(--text); margin-bottom: 4px; }
     .empty-sub { font-size: 13px; }
-
-    /* ---------- Круговая диаграмма ---------- */
     .chart-wrap { text-align: center; margin-bottom: 20px; }
     .chart-container { position: relative; width: 220px; height: 220px; margin: 0 auto 12px auto; }
     canvas { width: 220px; height: 220px; border-radius: 50%; filter: drop-shadow(0 0 18px rgba(255,159,0,0.25)); }
@@ -156,83 +89,24 @@
     .chart-legend { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; margin-top: 16px; }
     .legend-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-muted); font-weight: 500; }
     .legend-dot { width: 10px; height: 10px; border-radius: 50%; box-shadow: 0 0 10px currentColor; }
-
-    /* ---------- Лимиты ---------- */
     .limit-item { display: flex; justify-content: space-between; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--border); cursor: pointer; transition: background 0.2s; }
     .limit-item:last-child { border-bottom: none; }
     .limit-item:active { background: rgba(255,255,255,0.02); }
     .limit-name { font-size: 15px; color: var(--text); font-weight: 600; }
     .limit-value { font-size: 15px; font-weight: 800; font-variant-numeric: tabular-nums; color: var(--text-muted); }
     .hint { font-size: 11px; color: var(--text-muted); margin-top: 10px; text-align: center; }
-
-    /* ---------- FAB ---------- */
-    .fab {
-      position: fixed;
-      bottom: 120px;
-      right: 20px;
-      width: 56px;
-      height: 56px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--accent), #ff6b00);
-      color: #fff;
-      border: none;
-      font-size: 26px;
-      font-weight: 800;
-      cursor: pointer;
-      box-shadow: 0 14px 40px rgba(255,159,0,0.5);
-      z-index: 200;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: transform 0.15s, box-shadow 0.15s;
-    }
+    .fab { position: fixed; bottom: 120px; right: 20px; width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), #ff6b00); color: #fff; border: none; font-size: 26px; font-weight: 800; cursor: pointer; box-shadow: 0 14px 40px rgba(255,159,0,0.5); z-index: 200; display: flex; align-items: center; justify-content: center; transition: transform 0.15s, box-shadow 0.15s; }
     .fab:active { transform: scale(0.9); box-shadow: 0 10px 30px rgba(255,159,0,0.35); }
-
-    /* ---------- Модальное окно ---------- */
     .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(10px); z-index: 300; display: none; align-items: center; justify-content: center; padding: 20px; }
     .modal-overlay.open { display: flex; }
-    .modal {
-      background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
-      border: 1px solid var(--border);
-      border-radius: 26px;
-      padding: 22px;
-      width: 100%;
-      max-width: 330px;
-      max-height: 88vh;
-      overflow-y: auto;
-      box-shadow: 0 30px 80px rgba(0,0,0,0.6), inset 0 0 0 1px rgba(255,255,255,0.05);
-    }
+    .modal { background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01)); border: 1px solid var(--border); border-radius: 26px; padding: 22px; width: 100%; max-width: 330px; max-height: 88vh; overflow-y: auto; box-shadow: 0 30px 80px rgba(0,0,0,0.6), inset 0 0 0 1px rgba(255,255,255,0.05); }
     .modal-title { font-size: 19px; font-weight: 800; margin-bottom: 20px; letter-spacing: -0.4px; }
     .modal-field { margin-bottom: 16px; }
     .modal-field label { display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 8px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.4px; }
-    .modal-field input {
-      width: 100%;
-      background: rgba(0,0,0,0.4);
-      border: 1px solid var(--border);
-      color: var(--text);
-      padding: 13px 14px;
-      border-radius: 14px;
-      font-size: 15px;
-      outline: none;
-    }
-    .modal-field input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(255,159,0,0.15); }
-    .cat-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-      margin-top: 8px;
-    }
-    .cat-btn {
-      padding: 10px 6px;
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      background: rgba(0,0,0,0.3);
-      color: var(--text);
-      font-size: 12px;
-      cursor: pointer;
-      text-align: center;
-      transition: all 0.2s;
-    }
+    .modal-field input, .modal-field select { width: 100%; background: rgba(0,0,0,0.4); border: 1px solid var(--border); color: var(--text); padding: 13px 14px; border-radius: 14px; font-size: 15px; outline: none; }
+    .modal-field input:focus, .modal-field select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(255,159,0,0.15); }
+    .cat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 8px; }
+    .cat-btn { padding: 10px 6px; border: 1px solid var(--border); border-radius: 14px; background: rgba(0,0,0,0.3); color: var(--text); font-size: 12px; cursor: pointer; text-align: center; transition: all 0.2s; }
     .cat-btn.active { border-color: var(--accent); color: var(--accent); background: rgba(255,159,0,0.12); box-shadow: 0 0 16px rgba(255,159,0,0.15); }
     .cat-btn:active { background: rgba(255,255,255,0.05); }
     .modal-actions { display: flex; gap: 10px; margin-top: 22px; }
@@ -241,116 +115,83 @@
     .btn-primary:active { transform: scale(0.96); opacity: 0.95; }
     .status { margin-top: 10px; font-size: 12px; color: var(--success); min-height: 16px; font-weight: 600; }
     .status.error { color: var(--danger); }
-    .hint { font-size: 11px; color: var(--text-muted); margin-top: 8px; text-align: center; }
-
-    /* ---------- Таббар ---------- */
-    .tabbar {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 84px;
-      background: rgba(10,10,10,0.7);
-      backdrop-filter: blur(24px);
-      border-top: 1px solid var(--border);
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      z-index: 400;
-      padding-bottom: env(safe-area-inset-bottom, 0);
-    }
+    .tabbar { position: fixed; bottom: 0; left: 0; right: 0; height: 84px; background: rgba(10,10,10,0.7); backdrop-filter: blur(24px); border-top: 1px solid var(--border); display: flex; justify-content: space-around; align-items: center; z-index: 400; padding-bottom: env(safe-area-inset-bottom, 0); }
     .tabbar-item { display: flex; flex-direction: column; align-items: center; gap: 5px; color: var(--text-muted); font-size: 11px; cursor: pointer; min-width: 64px; transition: color 0.2s; }
     .tabbar-item.active { color: var(--accent); text-shadow: 0 0 16px rgba(255,159,0,0.4); }
     .tabbar-icon { font-size: 25px; }
     .tabbar-item.active .tabbar-icon { filter: drop-shadow(0 0 8px rgba(255,159,0,0.5)); }
 
+    /* ---------- Settings: Categories & Limits ---------- */
+    .settings-section { margin-bottom: 20px; }
+    .settings-section-title { font-size: 13px; color: var(--text-muted); margin-bottom: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+    .category-row { display: flex; align-items: center; gap: 10px; background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 12px; margin-bottom: 8px; }
+    .category-name { flex: 1; font-size: 15px; font-weight: 600; color: var(--text); }
+    .category-type { font-size: 12px; padding: 4px 8px; border-radius: 8px; font-weight: 600; text-transform: uppercase; }
+    .category-type.income { background: rgba(0,217,122,0.15); color: var(--success); }
+    .category-type.expense { background: rgba(255,69,58,0.15); color: var(--danger); }
+    .category-type.debt { background: rgba(255,204,0,0.15); color: var(--warning); }
+    .category-limit { font-size: 14px; font-weight: 700; color: var(--text-muted); font-variant-numeric: tabular-nums; }
+    .category-actions { display: flex; gap: 6px; }
+    .icon-btn { background: transparent; border: none; color: var(--text-muted); font-size: 16px; cursor: pointer; padding: 6px; border-radius: 8px; }
+    .icon-btn:active { background: rgba(255,255,255,0.05); }
+    .icon-btn.delete { color: var(--danger); }
+    .icon-btn.edit { color: var(--accent); }
+    .add-category-form { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+    .add-category-form input, .add-category-form select { flex: 1; min-width: 100px; background: rgba(0,0,0,0.4); border: 1px solid var(--border); color: var(--text); padding: 12px 14px; border-radius: 12px; font-size: 14px; outline: none; }
+    .add-category-form input:focus, .add-category-form select:focus { border-color: var(--accent); }
+    .add-category-form button { background: linear-gradient(135deg, var(--accent), #ff6b00); border: none; color: #fff; padding: 12px 20px; border-radius: 12px; font-weight: 700; cursor: pointer; }
   </style>
 </head>
 <body>
 
-  <!-- Декоративный фон -->
-  <div class="bg-mesh">
-    <div class="blob blob-1"></div>
-    <div class="blob blob-2"></div>
-    <div class="blob blob-3"></div>
-  </div>
-
-  <!-- Абстрактные человекообразные фигуры -->
+  <div class="bg-mesh"><div class="blob blob-1"></div><div class="blob blob-2"></div><div class="blob blob-3"></div></div>
   <div class="figures">
-    <svg class="figure fig-person-1" viewBox="0 0 200 300" preserveAspectRatio="none">
-      <path d="M 100 20 C 120 20 150 40 150 80 C 150 120 130 180 100 200 C 70 180 50 120 50 80 C 50 40 80 20 100 20 Z" fill="#ff9f00" opacity="0.9"/>
-      <ellipse cx="100" cy="40" rx="18" ry="20" fill="#ffcc00"/>
-      <path d="M 80 140 L 100 160 L 120 140" stroke="#ff6b00" stroke-width="8" fill="none" stroke-linecap="round"/>
-    </svg>
-    <svg class="figure fig-person-2" viewBox="0 0 160 240" preserveAspectRatio="none">
-      <path d="M 80 40 C 95 40 115 55 115 85 C 115 115 100 145 80 155 C 60 145 45 115 45 85 C 45 55 65 40 80 40 Z" fill="#ff6b00" opacity="0.85"/>
-      <ellipse cx="80" cy="60" rx="14" ry="16" fill="#ffcc00"/>
-    </svg>
+    <svg class="figure fig-person-1" viewBox="0 0 200 300" preserveAspectRatio="none"><path d="M 100 20 C 120 20 150 40 150 80 C 150 120 130 180 100 200 C 70 180 50 120 50 80 C 50 40 80 20 100 20 Z" fill="#ff9f00" opacity="0.95"/><ellipse cx="100" cy="40" rx="18" ry="20" fill="#ffcc00"/><path d="M 80 140 L 100 160 L 120 140" stroke="#ff6b00" stroke-width="8" fill="none" stroke-linecap="round"/></svg>
+    <svg class="figure fig-person-2" viewBox="0 0 160 240" preserveAspectRatio="none"><path d="M 80 40 C 95 40 115 55 115 85 C 115 115 100 145 80 155 C 60 145 45 115 45 85 C 45 55 65 40 80 40 Z" fill="#ff6b00" opacity="0.9"/><ellipse cx="80" cy="60" rx="14" ry="16" fill="#ffcc00"/></svg>
   </div>
 
-  <header>
-    <span class="app-title">Бюджет</span>
-    <select class="period-select" id="periodSelect"></select>
-  </header>
+  <header><span class="app-title">Бюджет</span><select class="period-select" id="periodSelect"></select></header>
 
-  <!-- Главная -->
   <section class="screen active" id="screen-home">
-    <div class="card big">
-      <div class="card-title">Остаток на период</div>
-      <div class="summary-value balance" id="homeBalance">0 ₽</div>
-    </div>
+    <div class="card big"><div class="card-title">Остаток на период</div><div class="summary-value balance" id="homeBalance">0 ₽</div></div>
     <div class="summary-grid">
-      <div class="summary-item income">
-        <span class="summary-label">Доходы</span>
-        <span class="summary-value income" id="homeIncome">0 ₽</span>
-      </div>
-      <div class="summary-item expense">
-        <span class="summary-label">Расходы</span>
-        <span class="summary-value expense" id="homeExpense">0 ₽</span>
-      </div>
-      <div class="summary-item debt">
-        <span class="summary-label">Рассрочка</span>
-        <span class="summary-value debt" id="homeDebt">0 ₽</span>
-      </div>
+      <div class="summary-item income"><span class="summary-label">Доходы</span><span class="summary-value income" id="homeIncome">0 ₽</span></div>
+      <div class="summary-item expense"><span class="summary-label">Расходы</span><span class="summary-value expense" id="homeExpense">0 ₽</span></div>
+      <div class="summary-item debt"><span class="summary-label">Рассрочка</span><span class="summary-value debt" id="homeDebt">0 ₽</span></div>
     </div>
-    <div class="card">
-      <div class="card-title">Недавние операции</div>
-      <div id="homeOps" class="op-list"></div>
-    </div>
+    <div class="card"><div class="card-title">Недавние операции</div><div id="homeOps" class="op-list"></div></div>
   </section>
 
-  <!-- Операции -->
   <section class="screen" id="screen-ops">
-    <div class="card">
-      <div class="card-title">Все операции за период</div>
-      <div id="opsList" class="op-list"></div>
-    </div>
+    <div class="card"><div class="card-title">Все операции за период</div><div id="opsList" class="op-list"></div></div>
   </section>
 
-  <!-- График -->
   <section class="screen" id="screen-chart">
-    <div class="card">
-      <div class="card-title">Расходы по категориям</div>
-      <div class="chart-wrap">
-        <div class="chart-container">
-          <canvas id="pieChart" width="260" height="260"></canvas>
-          <div class="chart-center">
-            <div class="chart-total" id="chartTotal">0 ₽</div>
-            <div class="chart-label" id="chartLabel">всего трат</div>
-          </div>
-        </div>
-      </div>
+    <div class="card"><div class="card-title">Расходы по категориям</div>
+      <div class="chart-wrap"><div class="chart-container"><canvas id="pieChart" width="260" height="260"></canvas><div class="chart-center"><div class="chart-total" id="chartTotal">0 ₽</div><div class="chart-label" id="chartLabel">всего трат</div></div></div></div>
       <div class="chart-legend" id="chartLegend"></div>
     </div>
   </section>
 
-  <!-- Настройки / лимиты -->
   <section class="screen" id="screen-settings">
+    <!-- Категории -->
+    <div class="card">
+      <div class="card-title">Категории</div>
+      <div id="categoriesList"></div>
+      <div class="add-category-form" id="addCategoryForm">
+        <input type="text" id="newCatName" placeholder="Название категории">
+        <select id="newCatType"><option value="expense">Расход</option><option value="income">Доход</option><option value="debt">Рассрочка</option></select>
+        <button id="btnAddCategory">Добавить</button>
+      </div>
+    </div>
+
+    <!-- Лимиты -->
     <div class="card">
       <div class="card-title">Лимиты по категориям</div>
       <div id="limitsList"></div>
-      <div class="hint">Бюджетный месяц: с 10-го по 10-е. Лимит можно скорректировать в любой момент.</div>
+      <div class="hint">Бюджетный месяц: с 10-го по 10-е. Нажмите на категорию, чтобы изменить лимит.</div>
     </div>
+
     <div class="card">
       <div class="card-title">Источник данных</div>
       <p style="font-size:12px;color:var(--text-muted);margin-bottom:12px;">Все операции синхронизируются с вашей Google Таблицей.</p>
@@ -360,32 +201,15 @@
 
   <button class="fab" id="fabAdd">+</button>
 
-  <!-- Модалка -->
   <div class="modal-overlay" id="modalOverlay">
     <div class="modal" id="modal">
       <div class="modal-title" id="modalTitle">Новая операция</div>
-      <div class="modal-field">
-        <label>Категория</label>
-        <div class="cat-grid" id="modalCatGrid"></div>
-        <input type="hidden" id="modalCategory">
-      </div>
-      <div class="modal-field">
-        <label>Сумма</label>
-        <input type="number" id="modalAmount" step="0.01" min="0" placeholder="0">
-      </div>
-      <div class="modal-field">
-        <label>Комментарий</label>
-        <input type="text" id="modalComment" placeholder="Например, Пятёрочка">
-      </div>
-      <div class="modal-field">
-        <label>Дата</label>
-        <input type="date" id="modalDate">
-      </div>
+      <div class="modal-field"><label>Категория</label><div class="cat-grid" id="modalCatGrid"></div><input type="hidden" id="modalCategory"></div>
+      <div class="modal-field"><label>Сумма</label><input type="number" id="modalAmount" step="0.01" min="0" placeholder="0"></div>
+      <div class="modal-field"><label>Комментарий</label><input type="text" id="modalComment" placeholder="Например, Пятёрочка"></div>
+      <div class="modal-field"><label>Дата</label><input type="date" id="modalDate"></div>
       <div class="status" id="modalStatus"></div>
-      <div class="modal-actions">
-        <button class="btn-secondary" id="modalCancel">Отмена</button>
-        <button class="btn-primary" id="modalSave">Сохранить</button>
-      </div>
+      <div class="modal-actions"><button class="btn-secondary" id="modalCancel">Отмена</button><button class="btn-primary" id="modalSave">Сохранить</button></div>
     </div>
   </div>
 
@@ -397,65 +221,27 @@
   </nav>
 
   <script>
-    const tg = window.Telegram.WebApp;
-    tg.ready();
-    tg.expand();
-
-    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyf0acKe1kaz7jWfc2CpDttEoBUFWEmaOUqIFXPPYvycpZsrzzB7BH-ViSSpMLU3M_u/exec';
+    const tg = window.Telegram.WebApp; tg.ready(); tg.expand();
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz3WHAUttt_wAHoz6wiiWXAyUO4INotIsqVBmrpH_H92PMu11gT6p9tCysbNuPry9rW/exec';
     const ALLOWED_IDS = [567232531, 1430603330];
     const userId = tg.initDataUnsafe?.user?.id;
-    if (!userId || !ALLOWED_IDS.includes(userId)) {
-      tg.showAlert('Доступ запрещён.');
-      throw new Error('Access denied');
-    }
+    if (!userId || !ALLOWED_IDS.includes(userId)) { tg.showAlert('Доступ запрещён.'); throw new Error('Access denied'); }
 
     let currentPeriod = getCurrentPeriodLabelJS();
-    let editingId = null;
-    let selectedCategory = null;
-    let categories = {};
-    let allOps = [];
+    let editingId = null; let selectedCategory = null; let categories = {}; let allOps = []; let categoriesLoaded = false;
 
-    const els = {
-      periodSelect: document.getElementById('periodSelect'),
-      screens: document.querySelectorAll('.screen'),
-      tabItems: document.querySelectorAll('.tabbar-item'),
-      homeIncome: document.getElementById('homeIncome'),
-      homeExpense: document.getElementById('homeExpense'),
-      homeDebt: document.getElementById('homeDebt'),
-      homeBalance: document.getElementById('homeBalance'),
-      homeOps: document.getElementById('homeOps'),
-      opsList: document.getElementById('opsList'),
-      modalOverlay: document.getElementById('modalOverlay'),
-      modal: document.getElementById('modal'),
-      modalTitle: document.getElementById('modalTitle'),
-      modalCatGrid: document.getElementById('modalCatGrid'),
-      modalCategory: document.getElementById('modalCategory'),
-      modalAmount: document.getElementById('modalAmount'),
-      modalComment: document.getElementById('modalComment'),
-      modalDate: document.getElementById('modalDate'),
-      modalStatus: document.getElementById('modalStatus'),
-      modalCancel: document.getElementById('modalCancel'),
-      modalSave: document.getElementById('modalSave'),
-      fabAdd: document.getElementById('fabAdd'),
-      chartTotal: document.getElementById('chartTotal'),
-      chartLabel: document.getElementById('chartLabel'),
-      chartLegend: document.getElementById('chartLegend'),
-      limitsList: document.getElementById('limitsList'),
-      btnImport: document.getElementById('btnImport')
-    };
+    const els = { periodSelect: document.getElementById('periodSelect'), screens: document.querySelectorAll('.screen'), tabItems: document.querySelectorAll('.tabbar-item'),
+      homeIncome: document.getElementById('homeIncome'), homeExpense: document.getElementById('homeExpense'), homeDebt: document.getElementById('homeDebt'), homeBalance: document.getElementById('homeBalance'),
+      homeOps: document.getElementById('homeOps'), opsList: document.getElementById('opsList'),
+      modalOverlay: document.getElementById('modalOverlay'), modal: document.getElementById('modal'), modalTitle: document.getElementById('modalTitle'),
+      modalCatGrid: document.getElementById('modalCatGrid'), modalCategory: document.getElementById('modalCategory'),
+      modalAmount: document.getElementById('modalAmount'), modalComment: document.getElementById('modalComment'), modalDate: document.getElementById('modalDate'),
+      modalStatus: document.getElementById('modalStatus'), modalCancel: document.getElementById('modalCancel'), modalSave: document.getElementById('modalSave'),
+      fabAdd: document.getElementById('fabAdd'), chartTotal: document.getElementById('chartTotal'), chartLabel: document.getElementById('chartLabel'),
+      chartLegend: document.getElementById('chartLegend'), limitsList: document.getElementById('limitsList'), btnImport: document.getElementById('btnImport'),
+      categoriesList: document.getElementById('categoriesList'), newCatName: document.getElementById('newCatName'), newCatType: document.getElementById('newCatType'), btnAddCategory: document.getElementById('btnAddCategory') };
 
-    els.tabItems.forEach(item => {
-      item.addEventListener('click', () => {
-        els.tabItems.forEach(i => i.classList.remove('active'));
-        item.classList.add('active');
-        els.screens.forEach(s => s.classList.remove('active'));
-        document.getElementById('screen-' + item.dataset.screen).classList.add('active');
-        if (item.dataset.screen === 'ops') loadOps();
-        if (item.dataset.screen === 'chart') loadChart();
-        if (item.dataset.screen === 'settings') loadSettings();
-      });
-    });
-
+    els.tabItems.forEach(item => { item.addEventListener('click', () => { els.tabItems.forEach(i => i.classList.remove('active')); item.classList.add('active'); els.screens.forEach(s => s.classList.remove('active')); document.getElementById('screen-' + item.dataset.screen).classList.add('active'); if (item.dataset.screen === 'ops') loadOps(); if (item.dataset.screen === 'chart') loadChart(); if (item.dataset.screen === 'settings') loadSettings(); }); });
     els.modalDate.valueAsDate = new Date();
 
     async function api(action, body = null) {
@@ -467,129 +253,54 @@
       return res.json();
     }
     function formatMoney(x) { return Math.round(x).toLocaleString('ru-RU'); }
-    function getCurrentPeriodLabelJS() {
-      const now = new Date();
-      if (now.getDate() >= 10) return now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0');
-      const prev = new Date(now.getFullYear(), now.getMonth()-1, 1);
-      return prev.getFullYear() + '-' + String(prev.getMonth()+1).padStart(2,'0');
-    }
-    async function loadPeriods() {
-      const r = await api('getPeriods');
-      els.periodSelect.innerHTML = '';
-      [r.current, r.previous].forEach((p, i) => {
-        const o = document.createElement('option');
-        o.value = p;
-        o.textContent = p + (i === 0 ? ' (текущий)' : '');
-        els.periodSelect.appendChild(o);
-      });
-      els.periodSelect.value = currentPeriod;
-    }
-    els.periodSelect.addEventListener('change', () => { currentPeriod = els.periodSelect.value; loadAll(); });
+    function getCurrentPeriodLabelJS() { const now = new Date(); if (now.getDate() >= 10) return now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0'); const prev = new Date(now.getFullYear(), now.getMonth()-1, 1); return prev.getFullYear() + '-' + String(prev.getMonth()+1).padStart(2,'0'); }
+    async function loadPeriods() { const r = await api('getPeriods'); els.periodSelect.innerHTML = ''; [r.current, r.previous].forEach((p,i)=>{const o=document.createElement('option');o.value=p;o.textContent=p+(i===0?' (текущий)':'');els.periodSelect.appendChild(o);}); els.periodSelect.value=currentPeriod; }
+    els.periodSelect.addEventListener('change', ()=>{currentPeriod=els.periodSelect.value;loadAll();});
 
-    async function loadHome() {
-      const r = await api('getSummary', { period: currentPeriod });
-      els.homeIncome.textContent = formatMoney(r.income) + ' ₽';
-      els.homeExpense.textContent = formatMoney(r.expense) + ' ₽';
-      els.homeDebt.textContent = formatMoney(r.debt) + ' ₽';
-      els.homeBalance.textContent = formatMoney(r.balance) + ' ₽';
-      renderOpsShort(r.byCat || {});
+    async function loadHome() { const r=await api('getSummary',{period:currentPeriod}); els.homeIncome.textContent=formatMoney(r.income)+' ₽'; els.homeExpense.textContent=formatMoney(r.expense)+' ₽'; els.homeDebt.textContent=formatMoney(r.debt)+' ₽'; els.homeBalance.textContent=formatMoney(r.balance)+' ₽'; renderOpsShort(r.byCat||{}); }
+    function renderOpsShort(byCat){els.homeOps.innerHTML='';const arr=Object.entries(byCat).sort((a,b)=>b[1]-a[1]).slice(0,4);if(arr.length===0){els.homeOps.innerHTML='<div class="empty"><span class="empty-icon">📭</span><div class="empty-text">Ещё нет операций</div><div class="empty-sub">Нажмите +, чтобы добавить первую</div></div>';return;}arr.forEach(([cat,amt])=>{const el=document.createElement('div');el.className='op-item';const type=categories[cat]?categories[cat].type:'expense';el.innerHTML=`<div class="op-info"><div class="op-category">${escapeHtml(cat)}</div><div class="op-meta">${type==='income'?'Доход':'Расход'}</div></div><div class="op-amount ${type}">${formatMoney(amt)} ₽</div>`;els.homeOps.appendChild(el);});}
+    async function loadOps(){const r=await api('getOperations',{period:currentPeriod});allOps=r.operations||[];renderOpsFull(allOps);}
+    function renderOpsFull(ops){els.opsList.innerHTML='';if(ops.length===0){els.opsList.innerHTML='<div class="empty"><span class="empty-icon">📭</span><div class="empty-text">Операций нет</div></div>';return;}ops.forEach(op=>{const el=document.createElement('div');el.className='op-item '+op.type;const typeLabel=op.type==='income'?'Доход':(op.type==='debt'?'Рассрочка':'Расход');el.innerHTML=`<div class="op-info"><div class="op-category">${escapeHtml(op.category)}</div><div class="op-meta">${typeLabel} • ${op.date}</div></div><div><div class="op-amount">${formatMoney(op.amount)} ₽</div><div class="op-actions"><button class="op-btn edit" onclick="startEdit('${op.id}')">✏️</button><button class="op-btn delete" onclick="deleteOp('${op.id}')">🗑️</button></div></div>`;els.opsList.appendChild(el);});}
+    async function loadChart(){const r=await api('getSummary',{period:currentPeriod});const byCat=r.byCat||{};const expenseOnly=Object.entries(byCat).filter(([c])=>categories[c]&&categories[c].type!=='income');const total=expenseOnly.reduce((s,[,a])=>s+a,0);els.chartTotal.textContent=formatMoney(total)+' ₽';els.chartLabel.textContent='всего трат за период';drawPieChart(expenseOnly,total);renderLegend(expenseOnly);}
+    function drawPieChart(data,total){const canvas=document.getElementById('pieChart');const ctx=canvas.getContext('2d');const center=130,radius=105;let start=-Math.PI/2;const colors=['#ff9f00','#ff6b00','#ff453a','#ffcc00','#5ac8fa','#af52de','#ff375f','#00d97a'];let i=0;data.forEach(([cat,amt])=>{const slice=(amt/total)*2*Math.PI;ctx.beginPath();ctx.moveTo(center,center);ctx.arc(center,center,radius,start,start+slice);ctx.closePath();ctx.fillStyle=colors[i%colors.length];ctx.fill();start+=slice;i++;});if(data.length===0){ctx.fillStyle='rgba(255,255,255,0.06)';ctx.beginPath();ctx.arc(center,center,radius,0,2*Math.PI);ctx.fill();}}
+    function renderLegend(data){els.chartLegend.innerHTML='';const colors=['#ff9f00','#ff6b00','#ff453a','#ffcc00','#5ac8fa','#af52de','#ff375f','#00d97a'];data.forEach(([cat,amt],i)=>{const el=document.createElement('div');el.className='legend-item';el.innerHTML=`<div class="legend-dot" style="background:${colors[i%colors.length]};box-shadow:0 0 10px ${colors[i%colors.length]}"></div><span>${escapeHtml(cat)}: ${formatMoney(amt)} ₽</span>`;els.chartLegend.appendChild(el);});}
+
+    // Settings: Categories & Limits
+    async function loadSettings(){
+      await loadCategoriesUI();
+      await loadLimitsUI();
     }
-    function renderOpsShort(byCat) {
-      els.homeOps.innerHTML = '';
-      const arr = Object.entries(byCat).sort((a,b) => b[1]-a[1]).slice(0, 4);
-      if (arr.length === 0) {
-        els.homeOps.innerHTML = '<div class="empty"><span class="empty-icon">📭</span><div class="empty-text">Ещё нет операций</div><div class="empty-sub">Нажмите +, чтобы добавить первую</div></div>';
-        return;
-      }
-      arr.forEach(([cat, amt]) => {
+    async function loadCategoriesUI(){
+      const r = await api('getCategories');
+      categories = r.categories || {};
+      els.categoriesList.innerHTML = '';
+      Object.entries(categories).forEach(([cat, meta]) => {
         const el = document.createElement('div');
-        el.className = 'op-item';
-        const type = categories[cat] ? categories[cat].type : 'expense';
+        el.className = 'category-row';
         el.innerHTML = `
-          <div class="op-info">
-            <div class="op-category">${escapeHtml(cat)}</div>
-            <div class="op-meta">${type === 'income' ? 'Доход' : 'Расход'}</div>
-          </div>
-          <div class="op-amount ${type}">${formatMoney(amt)} ₽</div>
-        `;
-        els.homeOps.appendChild(el);
-      });
-    }
-    async function loadOps() {
-      const r = await api('getOperations', { period: currentPeriod });
-      allOps = r.operations || [];
-      renderOpsFull(allOps);
-    }
-    function renderOpsFull(ops) {
-      els.opsList.innerHTML = '';
-      if (ops.length === 0) {
-        els.opsList.innerHTML = '<div class="empty"><span class="empty-icon">📭</span><div class="empty-text">Операций нет</div></div>';
-        return;
-      }
-      ops.forEach(op => {
-        const el = document.createElement('div');
-        el.className = 'op-item ' + op.type;
-        const typeLabel = op.type === 'income' ? 'Доход' : (op.type === 'debt' ? 'Рассрочка' : 'Расход');
-        el.innerHTML = `
-          <div class="op-info">
-            <div class="op-category">${escapeHtml(op.category)}</div>
-            <div class="op-meta">${typeLabel} • ${op.date}</div>
-          </div>
-          <div>
-            <div class="op-amount">${formatMoney(op.amount)} ₽</div>
-            <div class="op-actions">
-              <button class="op-btn edit" onclick="startEdit('${op.id}')">✏️</button>
-              <button class="op-btn delete" onclick="deleteOp('${op.id}')">🗑️</button>
-            </div>
+          <span class="category-name">${escapeHtml(cat)}</span>
+          <span class="category-type ${meta.type}">${meta.type==='income'?'доход':meta.type==='debt'?'рассрочка':'расход'}</span>
+          <div class="category-actions">
+            <button class="icon-btn edit" onclick="editCategoryPrompt('${escapeHtml(cat)}','${meta.type}')">✏️</button>
+            <button class="icon-btn delete" onclick="deleteCategoryPrompt('${escapeHtml(cat)}')">🗑️</button>
           </div>
         `;
-        els.opsList.appendChild(el);
+        els.categoriesList.appendChild(el);
       });
+      // Add category form
+      els.btnAddCategory.onclick = async () => {
+        const name = els.newCatName.value.trim();
+        const type = els.newCatType.value;
+        if (!name) { tg.showAlert('Введите название'); return; }
+        try {
+          await api('addCategory', { name, type });
+          els.newCatName.value = '';
+          await loadCategoriesUI();
+          tg.showAlert('Категория добавлена');
+        } catch (err) { tg.showAlert('Ошибка: ' + err.message); }
+      };
     }
-    async function loadChart() {
-      const r = await api('getSummary', { period: currentPeriod });
-      const byCat = r.byCat || {};
-      const expenseOnly = Object.entries(byCat).filter(([c]) => categories[c] && categories[c].type !== 'income');
-      const total = expenseOnly.reduce((s, [,a]) => s + a, 0);
-      els.chartTotal.textContent = formatMoney(total) + ' ₽';
-      els.chartLabel.textContent = 'всего трат за период';
-      drawPieChart(expenseOnly, total);
-      renderLegend(expenseOnly);
-    }
-    function drawPieChart(data, total) {
-      const canvas = document.getElementById('pieChart');
-      const ctx = canvas.getContext('2d');
-      const center = 130, radius = 105;
-      let start = -Math.PI / 2;
-      const colors = ['#ff9f00','#ff6b00','#ff453a','#ffcc00','#5ac8fa','#af52de','#ff375f','#00d97a'];
-      let i = 0;
-      data.forEach(([cat, amt]) => {
-        const slice = (amt / total) * 2 * Math.PI;
-        ctx.beginPath();
-        ctx.moveTo(center, center);
-        ctx.arc(center, center, radius, start, start + slice);
-        ctx.closePath();
-        ctx.fillStyle = colors[i % colors.length];
-        ctx.fill();
-        start += slice;
-        i++;
-      });
-      if (data.length === 0) {
-        ctx.fillStyle = 'rgba(255,255,255,0.06)';
-        ctx.beginPath(); ctx.arc(center, center, radius, 0, 2*Math.PI); ctx.fill();
-      }
-    }
-    function renderLegend(data) {
-      els.chartLegend.innerHTML = '';
-      const colors = ['#ff9f00','#ff6b00','#ff453a','#ffcc00','#5ac8fa','#af52de','#ff375f','#00d97a'];
-      data.forEach(([cat, amt], i) => {
-        const el = document.createElement('div');
-        el.className = 'legend-item';
-        el.innerHTML = `<div class="legend-dot" style="background:${colors[i % colors.length]}; box-shadow: 0 0 10px ${colors[i % colors.length]}"></div><span>${escapeHtml(cat)}: ${formatMoney(amt)} ₽</span>`;
-        els.chartLegend.appendChild(el);
-      });
-    }
-    async function loadSettings() {
+    async function loadLimitsUI(){
       const r = await api('getLimits', { period: currentPeriod });
       const limits = r.limits || {};
       els.limitsList.innerHTML = '';
@@ -598,109 +309,49 @@
         const el = document.createElement('div');
         el.className = 'limit-item';
         el.innerHTML = `
-          <div class="limit-name">${escapeHtml(cat)}</div>
-          <div class="limit-value">${formatMoney(val)} ₽</div>
+          <span class="limit-name">${escapeHtml(cat)}</span>
+          <span class="limit-value">${formatMoney(val)} ₽</span>
         `;
         el.onclick = () => setLimitPrompt(cat);
         els.limitsList.appendChild(el);
       });
     }
-    async function setLimitPrompt(cat) {
-      const val = prompt('Введите лимит для ' + cat + ':', '');
-      if (val === null) return;
+    async function setLimitPrompt(cat){
+      const val = prompt('Лимит для ' + cat + ':', '');
+      if (val===null) return;
       const n = parseFloat(val);
-      if (isNaN(n)) { showStatus('Неверная сумма', 'error'); return; }
+      if (isNaN(n)) { tg.showAlert('Неверная сумма'); return; }
       await api('setLimit', { category: cat, amount: n, period: currentPeriod });
       loadSettings();
     }
-    function renderCatGrid(selected) {
-      els.modalCatGrid.innerHTML = '';
-      Object.entries(categories).forEach(([cat]) => {
-        const btn = document.createElement('div');
-        btn.className = 'cat-btn' + (selected === cat ? ' active' : '');
-        btn.textContent = cat;
-        btn.onclick = () => {
-          selectedCategory = cat;
-          els.modalCategory.value = cat;
-          document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-        };
-        els.modalCatGrid.appendChild(btn);
-      });
+    function editCategoryPrompt(oldName, oldType){
+      const newName = prompt('Новое название:', oldName);
+      if (newName===null) return;
+      const types = ['expense','income','debt'];
+      const newType = prompt('Тип (expense/income/debt):', oldType);
+      if (newType===null) return;
+      if (!types.includes(newType)) { tg.showAlert('Неверный тип'); return; }
+      api('updateCategory', { oldName, newName, newType }).then(()=>{loadCategoriesUI();tg.showAlert('Обновлено');}).catch(e=>tg.showAlert('Ошибка: '+e.message));
     }
-    function openModal(isEdit = false, op = null) {
-      if (Object.keys(categories).length === 0) {
-        tg.showAlert('Категории ещё не загружены. Подождите немного.');
-        return;
-      }
-      editingId = isEdit ? op.id : null;
-      selectedCategory = isEdit ? op.category : null;
-      els.modalCategory.value = selectedCategory || '';
-      els.modalAmount.value = isEdit ? op.amount : '';
-      els.modalComment.value = isEdit ? op.comment : '';
-      els.modalDate.value = isEdit ? op.date : new Date().toISOString().split('T')[0];
-      renderCatGrid(selectedCategory);
-      els.modalStatus.textContent = '';
-      els.modalOverlay.classList.add('open');
+    function deleteCategoryPrompt(name){
+      if (!confirm('Удалить категорию "'+name+'"?')) return;
+      api('deleteCategory', { name }).then(()=>{loadCategoriesUI();tg.showAlert('Удалено');}).catch(e=>tg.showAlert('Ошибка: '+e.message));
     }
-    function closeModal() { els.modalOverlay.classList.remove('open'); editingId = null; selectedCategory = null; }
-    els.modalCancel.addEventListener('click', closeModal);
-    els.modalOverlay.addEventListener('click', e => { if (e.target === els.modalOverlay) closeModal(); });
-    els.fabAdd.addEventListener('click', () => openModal(false));
-    els.modalSave.addEventListener('click', async () => {
-      const cat = selectedCategory;
-      const amount = parseFloat(els.modalAmount.value);
-      const comment = els.modalComment.value.trim();
-      const date = els.modalDate.value;
-      if (!cat) { els.modalStatus.textContent = 'Выберите категорию'; els.modalStatus.className = 'status error'; return; }
-      if (!amount || amount <= 0) { els.modalStatus.textContent = 'Введите сумму'; els.modalStatus.className = 'status error'; return; }
-      els.modalSave.disabled = true;
-      try {
-        const type = categories[cat] ? categories[cat].type : 'expense';
-        if (editingId) {
-          await api('updateOperation', { id: editingId, category: cat, amount, comment, date, type });
-        } else {
-          await api('addOperation', { category: cat, amount, comment, date, type });
-        }
-        closeModal();
-        loadAll();
-      } catch (err) {
-        els.modalStatus.textContent = 'Ошибка: ' + err.message;
-        els.modalStatus.className = 'status error';
-      } finally { els.modalSave.disabled = false; }
-    });
-    window.startEdit = function(id) {
-      const op = allOps.find(o => o.id === id);
-      if (op) openModal(true, op);
-    };
-    window.deleteOp = async function(id) {
-      if (!confirm('Удалить операцию?')) return;
-      await api('deleteOperation', { id });
-      loadAll();
-    };
-    async function loadAll() {
-      await loadPeriods();
-      const screen = document.querySelector('.tabbar-item.active').dataset.screen;
-      if (screen === 'home') await loadHome();
-      if (screen === 'ops') await loadOps();
-      if (screen === 'chart') await loadChart();
-      if (screen === 'settings') await loadSettings();
-    }
-    els.btnImport.addEventListener('click', async () => {
-      els.btnImport.textContent = 'Обновляю...';
-      await loadAll();
-      els.btnImport.textContent = 'Обновить данные из таблицы';
-      tg.showAlert('Данные обновлены');
-    });
-    async function init() {
-      await loadPeriods();
-      const r = await api('getCategories');
-      categories = r.categories || {};
-      loadAll();
-    }
-    init();
-    function escapeHtml(s) { return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
-    function showStatus(msg, type) {}
+
+    function renderCatGrid(selected){els.modalCatGrid.innerHTML='';Object.entries(categories).forEach(([cat])=>{const btn=document.createElement('div');btn.className='cat-btn'+(selected===cat?' active':'');btn.textContent=cat;btn.onclick=()=>{selectedCategory=cat;els.modalCategory.value=cat;document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');};els.modalCatGrid.appendChild(btn);});}
+    function openModal(isEdit=false,op=null){if(!categoriesLoaded){tg.showAlert('Категории загружаются...');return;}if(Object.keys(categories).length===0){tg.showAlert('Категории не найдены');return;}editingId=isEdit?op.id:null;selectedCategory=isEdit?op.category:null;els.modalCategory.value=selectedCategory||'';els.modalAmount.value=isEdit?op.amount:'';els.modalComment.value=isEdit?op.comment:'';els.modalDate.value=isEdit?op.date:new Date().toISOString().split('T')[0];renderCatGrid(selectedCategory);els.modalStatus.textContent='';els.modalOverlay.classList.add('open');}
+    function closeModal(){els.modalOverlay.classList.remove('open');editingId=null;selectedCategory=null;}
+    els.modalCancel.addEventListener('click',closeModal);
+    els.modalOverlay.addEventListener('click',e=>{if(e.target===els.modalOverlay)closeModal();});
+    els.fabAdd.addEventListener('click',()=>openModal(false));
+    els.modalSave.addEventListener('click',async()=>{const cat=selectedCategory;const amount=parseFloat(els.modalAmount.value);const comment=els.modalComment.value.trim();const date=els.modalDate.value;if(!cat){els.modalStatus.textContent='Выберите категорию';els.modalStatus.className='status error';return;}if(!amount||amount<=0){els.modalStatus.textContent='Введите сумму';els.modalStatus.className='status error';return;}els.modalSave.disabled=true;try{const type=categories[cat]?categories[cat].type:'expense';if(editingId){await api('updateOperation',{id:editingId,category:cat,amount,comment,date,type});}else{await api('addOperation',{category:cat,amount,comment,date,type});}closeModal();loadAll();}catch(err){els.modalStatus.textContent='Ошибка: '+err.message;els.modalStatus.className='status error';}finally{els.modalSave.disabled=false;}});
+    window.startEdit=function(id){const op=allOps.find(o=>o.id===id);if(op)openModal(true,op);};
+    window.deleteOp=async function(id){if(!confirm('Удалить операцию?'))return;await api('deleteOperation',{id});loadAll();};
+    async function loadAll(){await loadPeriods();const screen=document.querySelector('.tabbar-item.active').dataset.screen;if(screen==='home')await loadHome();if(screen==='ops')await loadOps();if(screen==='chart')await loadChart();if(screen==='settings')await loadSettings();}
+    els.btnImport.addEventListener('click',async()=>{els.btnImport.textContent='Обновляю...';await loadAll();els.btnImport.textContent='Обновить данные из таблицы';tg.showAlert('Данные обновлены');});
+    async function init(){await loadPeriods();const r=await api('getCategories');categories=r.categories||{};categoriesLoaded=true;loadAll();}init();
+    function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+    function showStatus(msg,type){}
   </script>
 </body>
 </html>
