@@ -28,10 +28,7 @@
       overflow-x: hidden;
       height: 100vh;
     }
-    .bg-mesh {
-      position: fixed; inset: 0; z-index: 0; overflow: hidden;
-      background: radial-gradient(circle at 50% 0%, #1a1a1a 0%, #0a0a0a 60%, #050505 100%);
-    }
+    .bg-mesh { position: fixed; inset: 0; z-index: 0; overflow: hidden; background: radial-gradient(circle at 50% 0%, #1a1a1a 0%, #0a0a0a 60%, #050505 100%); }
     .blob { position: absolute; filter: blur(50px); opacity: 0.4; border-radius: 50%; z-index: 1; }
     .blob-1 { top: -5%; left: -5%; width: 45vw; height: 45vw; background: conic-gradient(from 0deg, #ff9f00, #ff6b00, #ff453a, #ff9f00); animation: drift1 10s ease-in-out infinite; }
     .blob-2 { bottom: -10%; right: -10%; width: 40vw; height: 40vw; background: conic-gradient(from 90deg, #ffcc00, #ff6b00, #ff453a); animation: drift2 13s ease-in-out infinite reverse; }
@@ -72,7 +69,7 @@
     .debt .op-amount { color: var(--warning); }
     .op-actions { opacity: 0; transition: opacity 0.2s; }
     .op-item:hover .op-actions { opacity: 1; }
-    .op-btn { background: transparent; border: none; color: var(--text-muted); font-size: 17px; cursor: pointer; padding: 6px; margin-left: 6px; border-radius: 8px; }
+    .op-btn { background: transparent; border: none; color: var(--text-muted); font-size: 16px; cursor: pointer; padding: 6px; margin-left: 6px; border-radius: 8px; }
     .op-btn:active { background: rgba(255,255,255,0.05); }
     .op-btn.delete { color: var(--danger); }
     .op-btn.edit { color: var(--accent); }
@@ -121,7 +118,7 @@
     .tabbar-icon { font-size: 25px; }
     .tabbar-item.active .tabbar-icon { filter: drop-shadow(0 0 8px rgba(255,159,0,0.5)); }
 
-    /* ---------- Settings: Categories & Limits ---------- */
+    /* Settings: Categories */
     .settings-section { margin-bottom: 20px; }
     .settings-section-title { font-size: 13px; color: var(--text-muted); margin-bottom: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
     .category-row { display: flex; align-items: center; gap: 10px; background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 12px; margin-bottom: 8px; }
@@ -130,7 +127,6 @@
     .category-type.income { background: rgba(0,217,122,0.15); color: var(--success); }
     .category-type.expense { background: rgba(255,69,58,0.15); color: var(--danger); }
     .category-type.debt { background: rgba(255,204,0,0.15); color: var(--warning); }
-    .category-limit { font-size: 14px; font-weight: 700; color: var(--text-muted); font-variant-numeric: tabular-nums; }
     .category-actions { display: flex; gap: 6px; }
     .icon-btn { background: transparent; border: none; color: var(--text-muted); font-size: 16px; cursor: pointer; padding: 6px; border-radius: 8px; }
     .icon-btn:active { background: rgba(255,255,255,0.05); }
@@ -140,6 +136,7 @@
     .add-category-form input, .add-category-form select { flex: 1; min-width: 100px; background: rgba(0,0,0,0.4); border: 1px solid var(--border); color: var(--text); padding: 12px 14px; border-radius: 12px; font-size: 14px; outline: none; }
     .add-category-form input:focus, .add-category-form select:focus { border-color: var(--accent); }
     .add-category-form button { background: linear-gradient(135deg, var(--accent), #ff6b00); border: none; color: #fff; padding: 12px 20px; border-radius: 12px; font-weight: 700; cursor: pointer; }
+    .btn-copy-limits { width: 100%; margin-top: 12px; padding: 12px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); color: var(--text); border-radius: 12px; font-weight: 700; cursor: pointer; }
   </style>
 </head>
 <body>
@@ -189,7 +186,8 @@
     <div class="card">
       <div class="card-title">Лимиты по категориям</div>
       <div id="limitsList"></div>
-      <div class="hint">Бюджетный месяц: с 10-го по 10-е. Нажмите на категорию, чтобы изменить лимит.</div>
+      <button class="btn-copy-limits" id="btnCopyLimits">Скопировать лимиты из прошлого месяца</button>
+      <div class="hint">Бюджетный месяц: с 10-го по 10-е. Нажмите на категорию, чтобы изменить лимит. Кнопка выше копирует все лимиты из прошлого периода.</div>
     </div>
 
     <div class="card">
@@ -222,7 +220,7 @@
 
   <script>
     const tg = window.Telegram.WebApp; tg.ready(); tg.expand();
-    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz3WHAUttt_wAHoz6wiiWXAyUO4INotIsqVBmrpH_H92PMu11gT6p9tCysbNuPry9rW/exec';
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzwF7NrtQAWJ6TA3MBNGZSnoam_z0DNr-X0bAegmgtEb6Qbq35bIQ9v1-hI6MCo8wVl/exec';
     const ALLOWED_IDS = [567232531, 1430603330];
     const userId = tg.initDataUnsafe?.user?.id;
     if (!userId || !ALLOWED_IDS.includes(userId)) { tg.showAlert('Доступ запрещён.'); throw new Error('Access denied'); }
@@ -239,7 +237,8 @@
       modalStatus: document.getElementById('modalStatus'), modalCancel: document.getElementById('modalCancel'), modalSave: document.getElementById('modalSave'),
       fabAdd: document.getElementById('fabAdd'), chartTotal: document.getElementById('chartTotal'), chartLabel: document.getElementById('chartLabel'),
       chartLegend: document.getElementById('chartLegend'), limitsList: document.getElementById('limitsList'), btnImport: document.getElementById('btnImport'),
-      categoriesList: document.getElementById('categoriesList'), newCatName: document.getElementById('newCatName'), newCatType: document.getElementById('newCatType'), btnAddCategory: document.getElementById('btnAddCategory') };
+      categoriesList: document.getElementById('categoriesList'), newCatName: document.getElementById('newCatName'), newCatType: document.getElementById('newCatType'), btnAddCategory: document.getElementById('btnAddCategory'),
+      btnCopyLimits: document.getElementById('btnCopyLimits') };
 
     els.tabItems.forEach(item => { item.addEventListener('click', () => { els.tabItems.forEach(i => i.classList.remove('active')); item.classList.add('active'); els.screens.forEach(s => s.classList.remove('active')); document.getElementById('screen-' + item.dataset.screen).classList.add('active'); if (item.dataset.screen === 'ops') loadOps(); if (item.dataset.screen === 'chart') loadChart(); if (item.dataset.screen === 'settings') loadSettings(); }); });
     els.modalDate.valueAsDate = new Date();
@@ -265,11 +264,8 @@
     function drawPieChart(data,total){const canvas=document.getElementById('pieChart');const ctx=canvas.getContext('2d');const center=130,radius=105;let start=-Math.PI/2;const colors=['#ff9f00','#ff6b00','#ff453a','#ffcc00','#5ac8fa','#af52de','#ff375f','#00d97a'];let i=0;data.forEach(([cat,amt])=>{const slice=(amt/total)*2*Math.PI;ctx.beginPath();ctx.moveTo(center,center);ctx.arc(center,center,radius,start,start+slice);ctx.closePath();ctx.fillStyle=colors[i%colors.length];ctx.fill();start+=slice;i++;});if(data.length===0){ctx.fillStyle='rgba(255,255,255,0.06)';ctx.beginPath();ctx.arc(center,center,radius,0,2*Math.PI);ctx.fill();}}
     function renderLegend(data){els.chartLegend.innerHTML='';const colors=['#ff9f00','#ff6b00','#ff453a','#ffcc00','#5ac8fa','#af52de','#ff375f','#00d97a'];data.forEach(([cat,amt],i)=>{const el=document.createElement('div');el.className='legend-item';el.innerHTML=`<div class="legend-dot" style="background:${colors[i%colors.length]};box-shadow:0 0 10px ${colors[i%colors.length]}"></div><span>${escapeHtml(cat)}: ${formatMoney(amt)} ₽</span>`;els.chartLegend.appendChild(el);});}
 
-    // Settings: Categories & Limits
-    async function loadSettings(){
-      await loadCategoriesUI();
-      await loadLimitsUI();
-    }
+    // Settings
+    async function loadSettings(){ await loadCategoriesUI(); await loadLimitsUI(); }
     async function loadCategoriesUI(){
       const r = await api('getCategories');
       categories = r.categories || {};
@@ -287,17 +283,11 @@
         `;
         els.categoriesList.appendChild(el);
       });
-      // Add category form
       els.btnAddCategory.onclick = async () => {
         const name = els.newCatName.value.trim();
         const type = els.newCatType.value;
         if (!name) { tg.showAlert('Введите название'); return; }
-        try {
-          await api('addCategory', { name, type });
-          els.newCatName.value = '';
-          await loadCategoriesUI();
-          tg.showAlert('Категория добавлена');
-        } catch (err) { tg.showAlert('Ошибка: ' + err.message); }
+        try { await api('addCategory', { name, type }); els.newCatName.value = ''; await loadCategoriesUI(); tg.showAlert('Категория добавлена'); } catch (err) { tg.showAlert('Ошибка: ' + err.message); }
       };
     }
     async function loadLimitsUI(){
@@ -308,13 +298,16 @@
         const val = limits[cat] || 0;
         const el = document.createElement('div');
         el.className = 'limit-item';
-        el.innerHTML = `
-          <span class="limit-name">${escapeHtml(cat)}</span>
-          <span class="limit-value">${formatMoney(val)} ₽</span>
-        `;
+        el.innerHTML = `<span class="limit-name">${escapeHtml(cat)}</span><span class="limit-value">${formatMoney(val)} ₽</span>`;
         el.onclick = () => setLimitPrompt(cat);
         els.limitsList.appendChild(el);
       });
+      // Copy limits button
+      els.btnCopyLimits.onclick = async () => {
+        els.btnCopyLimits.textContent = 'Копирую...';
+        try { await api('copyLimitsFromPrevious', { period: currentPeriod }); tg.showAlert('Лимиты скопированы'); await loadLimitsUI(); } catch (e) { tg.showAlert('Ошибка: ' + e.message); }
+        els.btnCopyLimits.textContent = 'Скопировать лимиты из прошлого месяца';
+      };
     }
     async function setLimitPrompt(cat){
       const val = prompt('Лимит для ' + cat + ':', '');
