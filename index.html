@@ -8,35 +8,72 @@
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --bg: #0a0a0a;
-      --card: #141414;
+      --bg-dark: #0a0a0a;
+      --card: rgba(20, 20, 20, 0.6);
       --accent: #ff9f00;
-      --accent-hover: #e68a00;
+      --accent-deep: #e68a00;
+      --glow: rgba(255, 159, 0, 0.35);
       --text: #ffffff;
       --text-muted: #a0a0a0;
-      --border: #2a2a2a;
+      --border: rgba(255, 255, 255, 0.08);
       --success: #00d97a;
       --danger: #ff453a;
       --warning: #ffcc00;
     }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif;
-      background: var(--bg);
+    html, body {
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', 'Helvetica Neue', sans-serif;
+      background: var(--bg-dark);
       color: var(--text);
       padding-bottom: 100px;
       overflow-x: hidden;
+      height: 100vh;
     }
+
+    /* ---------- Декоративный фон в стиле Aivo ---------- */
+    .bg-mesh {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      background: radial-gradient(circle at 50% 0%, #1a1a1a 0%, #0a0a0a 60%, #050505 100%);
+    }
+    .blob {
+      position: absolute;
+      filter: blur(60px);
+      opacity: 0.35;
+      border-radius: 50%;
+      z-index: 1;
+    }
+    .blob-1 { top: -10%; left: -10%; width: 40vw; height: 40vw; background: conic-gradient(from 0deg, #ff9f00, #ff6b00, #ff453a, #ff9f00); animation: drift1 12s ease-in-out infinite; }
+    .blob-2 { bottom: -5%; right: -5%; width: 35vw; height: 35vw; background: conic-gradient(from 90deg, #ffcc00, #ff6b00, #ff453a); animation: drift2 15s ease-in-out infinite reverse; }
+    .blob-3 { top: 30%; left: 40%; width: 25vw; height: 25vw; background: radial-gradient(circle, rgba(255,159,0,0.4), transparent 70%); animation: drift3 10s ease-in-out infinite; }
+    @keyframes drift1 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(30px,40px) scale(1.15); } }
+    @keyframes drift2 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-30px,-40px) scale(1.1); } }
+    @keyframes drift3 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(20px,-30px) scale(1.05); } }
+
+    /* Абстрактные человекообразные фигуры (SVG) */
+    .figures {
+      position: fixed;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .figure { position: absolute; opacity: 0.08; filter: blur(12px); }
+    .fig-person-1 { top: 10%; right: 8%; width: 220px; height: 340px; z-index: 2; }
+    .fig-person-2 { bottom: 15%; left: 6%; width: 180px; height: 280px; z-index: 2; }
+
     header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 16px;
-      background: rgba(10,10,10,0.8);
-      backdrop-filter: blur(10px);
+      background: rgba(10,10,10,0.5);
+      backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border);
-      position: sticky;
-      top: 0;
-      z-index: 100;
     }
     .app-title { font-size: 17px; font-weight: 600; letter-spacing: -0.5px; }
     .period-select {
@@ -44,34 +81,94 @@
       border: 1px solid var(--border);
       color: var(--text);
       padding: 6px 10px;
-      border-radius: 8px;
+      border-radius: 10px;
       font-size: 13px;
       outline: none;
     }
-    .screen { display: none; min-height: calc(100vh - 160px); padding: 16px; animation: fadeIn 0.3s ease; }
+
+    .screen { display: none; min-height: calc(100vh - 130px); padding: 16px; animation: fadeIn 0.35s ease; }
     .screen.active { display: block; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+
+    /* ---------- Карточки (стекло + свечение) ---------- */
     .card {
-      background: linear-gradient(145deg, #1a1a1a, #0f0f0f);
+      position: relative;
+      background: linear-gradient(145deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
       border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 16px;
+      border-radius: 22px;
+      padding: 18px;
       margin-bottom: 14px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.45), inset 0 0 0 1px rgba(255,255,255,0.03);
+      z-index: 10;
     }
-    .card-title { font-size: 14px; color: var(--text-muted); margin-bottom: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+    .card-title { font-size: 13px; color: var(--text-muted); margin-bottom: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; }
+
+    /* ---------- Сводка ---------- */
     .summary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
-    .summary-item { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 14px; text-align: center; }
+    .summary-item { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 16px; text-align: center; }
     .summary-item.big { grid-column: span 2; }
-    .summary-label { font-size: 12px; color: var(--text-muted); display: block; margin-bottom: 6px; }
-    .summary-value { font-size: 28px; font-weight: 700; font-variant-numeric: tabular-nums; }
-    .income { color: var(--success); }
-    .expense { color: var(--danger); }
-    .debt { color: var(--warning); }
-    .balance { color: var(--text); }
+    .summary-label { font-size: 11px; color: var(--text-muted); display: block; margin-bottom: 8px; font-weight: 600; text-transform: uppercase; }
+    .summary-value { font-size: 30px; font-weight: 800; font-variant-numeric: tabular-nums; line-height: 1; }
+    .income { color: var(--success); text-shadow: 0 0 20px rgba(0,217,122,0.25); }
+    .expense { color: var(--danger); text-shadow: 0 0 20px rgba(255,69,58,0.25); }
+    .debt { color: var(--warning); text-shadow: 0 0 20px rgba(255,204,0,0.25); }
+    .balance { color: var(--text); text-shadow: 0 0 20px rgba(255,159,0,0.2); }
+
+    /* ---------- Операции ---------- */
+    .op-list { margin-bottom: 80px; }
+    .op-item {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 14px 16px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .op-item:active { transform: scale(0.98); box-shadow: 0 12px 40px rgba(0,0,0,0.3); }
+    .op-info { flex: 1; }
+    .op-category { font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 3px; letter-spacing: -0.3px; }
+    .op-meta { font-size: 11px; color: var(--text-muted); }
+    .op-amount { font-size: 18px; font-weight: 800; font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .expense .op-amount { color: var(--danger); }
+    .income .op-amount { color: var(--success); }
+    .debt .op-amount { color: var(--warning); }
+    .op-actions { opacity: 0; transition: opacity 0.2s; }
+    .op-item:hover .op-actions { opacity: 1; }
+    .op-btn { background: transparent; border: none; color: var(--text-muted); font-size: 17px; cursor: pointer; padding: 6px; margin-left: 6px; border-radius: 8px; }
+    .op-btn:active { background: rgba(255,255,255,0.05); }
+    .op-btn.delete { color: var(--danger); }
+    .op-btn.edit { color: var(--accent); }
+    .empty { text-align: center; padding: 70px 20px; color: var(--text-muted); }
+    .empty-icon { font-size: 56px; margin-bottom: 14px; display: block; opacity: 0.5; }
+    .empty-text { font-size: 15px; font-weight: 500; color: var(--text); margin-bottom: 4px; }
+    .empty-sub { font-size: 13px; }
+
+    /* ---------- Круговая диаграмма ---------- */
+    .chart-wrap { text-align: center; margin-bottom: 20px; }
+    .chart-container { position: relative; width: 220px; height: 220px; margin: 0 auto 12px auto; }
+    canvas { width: 220px; height: 220px; border-radius: 50%; filter: drop-shadow(0 0 18px rgba(255,159,0,0.25)); }
+    .chart-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); text-align: center; z-index: 3; }
+    .chart-total { font-size: 28px; font-weight: 800; color: var(--text); }
+    .chart-label { font-size: 11px; color: var(--text-muted); margin-top: 5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.4px; }
+    .chart-legend { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; margin-top: 16px; }
+    .legend-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-muted); font-weight: 500; }
+    .legend-dot { width: 10px; height: 10px; border-radius: 50%; box-shadow: 0 0 10px currentColor; }
+
+    /* ---------- Лимиты ---------- */
+    .limit-item { display: flex; justify-content: space-between; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--border); cursor: pointer; transition: background 0.2s; }
+    .limit-item:last-child { border-bottom: none; }
+    .limit-item:active { background: rgba(255,255,255,0.02); }
+    .limit-name { font-size: 15px; color: var(--text); font-weight: 600; }
+    .limit-value { font-size: 15px; font-weight: 800; font-variant-numeric: tabular-nums; color: var(--text-muted); }
+    .hint { font-size: 11px; color: var(--text-muted); margin-top: 10px; text-align: center; }
+
+    /* ---------- FAB ---------- */
     .fab {
       position: fixed;
-      bottom: 110px;
+      bottom: 120px;
       right: 20px;
       width: 56px;
       height: 56px;
@@ -79,117 +176,124 @@
       background: linear-gradient(135deg, var(--accent), #ff6b00);
       color: #fff;
       border: none;
-      font-size: 24px;
-      font-weight: 700;
+      font-size: 26px;
+      font-weight: 800;
       cursor: pointer;
-      box-shadow: 0 8px 24px rgba(255,159,0,0.4);
+      box-shadow: 0 14px 40px rgba(255,159,0,0.5);
       z-index: 200;
       display: flex;
       align-items: center;
       justify-content: center;
+      transition: transform 0.15s, box-shadow 0.15s;
     }
-    .fab:active { transform: scale(0.92); }
-    .op-list { margin-bottom: 80px; }
-    .op-item {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 14px 16px;
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .op-info { flex: 1; }
-    .op-category { font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
-    .op-meta { font-size: 12px; color: var(--text-muted); }
-    .op-amount { font-size: 17px; font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
-    .expense .op-amount { color: var(--danger); }
-    .income .op-amount { color: var(--success); }
-    .debt .op-amount { color: var(--warning); }
-    .op-actions { opacity: 0; transition: opacity 0.2s; }
-    .op-item:hover .op-actions { opacity: 1; }
-    .op-btn { background: transparent; border: none; color: var(--text-muted); font-size: 18px; cursor: pointer; padding: 4px; margin-left: 6px; }
-    .op-btn.delete { color: var(--danger); }
-    .op-btn.edit { color: var(--accent); }
-    .empty { text-align: center; padding: 60px 20px; color: var(--text-muted); }
-    .empty-icon { font-size: 48px; margin-bottom: 12px; display: block; }
-    .chart-wrap { text-align: center; margin-bottom: 20px; }
-    .chart-container { position: relative; width: 200px; height: 200px; margin: 0 auto; }
-    canvas { width: 200px; height: 200px; }
-    .chart-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); text-align: center; }
-    .chart-total { font-size: 32px; font-weight: 700; color: var(--text); }
-    .chart-label { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
-    .chart-legend { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; margin-top: 20px; }
-    .legend-item { display: flex; align-items: center; gap: 8px; font-size: 13px; }
-    .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
-    .limit-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--border); }
-    .limit-item:last-child { border-bottom: none; }
-    .limit-name { font-size: 15px; color: var(--text); }
-    .limit-value { font-size: 15px; font-weight: 600; font-variant-numeric: tabular-nums; }
-    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 1000; display: none; align-items: center; justify-content: center; padding: 20px; }
+    .fab:active { transform: scale(0.9); box-shadow: 0 10px 30px rgba(255,159,0,0.35); }
+
+    /* ---------- Модальное окно ---------- */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(10px); z-index: 300; display: none; align-items: center; justify-content: center; padding: 20px; }
     .modal-overlay.open { display: flex; }
     .modal {
-      background: var(--card);
+      background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
       border: 1px solid var(--border);
-      border-radius: 24px;
-      padding: 24px;
+      border-radius: 26px;
+      padding: 22px;
       width: 100%;
-      max-width: 340px;
-      max-height: 90vh;
+      max-width: 330px;
+      max-height: 88vh;
       overflow-y: auto;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+      box-shadow: 0 30px 80px rgba(0,0,0,0.6), inset 0 0 0 1px rgba(255,255,255,0.05);
     }
-    .modal-title { font-size: 18px; font-weight: 700; margin-bottom: 18px; }
+    .modal-title { font-size: 19px; font-weight: 800; margin-bottom: 20px; letter-spacing: -0.4px; }
     .modal-field { margin-bottom: 16px; }
-    .modal-field label { display: block; font-size: 13px; color: var(--text-muted); margin-bottom: 8px; }
-    .modal-field input, .modal-field select {
+    .modal-field label { display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 8px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.4px; }
+    .modal-field input {
       width: 100%;
-      background: #0a0a0a;
+      background: rgba(0,0,0,0.4);
       border: 1px solid var(--border);
       color: var(--text);
-      padding: 12px 14px;
-      border-radius: 12px;
+      padding: 13px 14px;
+      border-radius: 14px;
       font-size: 15px;
       outline: none;
     }
-    .modal-field input:focus { border-color: var(--accent); }
-    .modal-actions { display: flex; gap: 10px; margin-top: 24px; }
-    .btn-secondary { flex: 1; padding: 12px; background: #1a1a1a; border: 1px solid var(--border); color: var(--text); border-radius: 12px; font-weight: 600; cursor: pointer; }
-    .btn-primary { flex: 1; padding: 12px; background: linear-gradient(135deg, var(--accent), #ff6b00); border: none; color: #fff; border-radius: 12px; font-weight: 700; cursor: pointer; }
-    .btn-primary:active { opacity: 0.9; }
+    .modal-field input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(255,159,0,0.15); }
+    .cat-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .cat-btn {
+      padding: 10px 6px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: rgba(0,0,0,0.3);
+      color: var(--text);
+      font-size: 12px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+    }
+    .cat-btn.active { border-color: var(--accent); color: var(--accent); background: rgba(255,159,0,0.12); box-shadow: 0 0 16px rgba(255,159,0,0.15); }
+    .cat-btn:active { background: rgba(255,255,255,0.05); }
+    .modal-actions { display: flex; gap: 10px; margin-top: 22px; }
+    .btn-secondary { flex: 1; padding: 13px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); color: var(--text); border-radius: 14px; font-weight: 700; cursor: pointer; }
+    .btn-primary { flex: 1; padding: 13px; background: linear-gradient(135deg, var(--accent), #ff6b00); border: none; color: #fff; border-radius: 14px; font-weight: 800; cursor: pointer; box-shadow: 0 10px 28px rgba(255,159,0,0.45); }
+    .btn-primary:active { transform: scale(0.96); opacity: 0.95; }
+    .status { margin-top: 10px; font-size: 12px; color: var(--success); min-height: 16px; font-weight: 600; }
+    .status.error { color: var(--danger); }
+    .hint { font-size: 11px; color: var(--text-muted); margin-top: 8px; text-align: center; }
+
+    /* ---------- Таббар ---------- */
     .tabbar {
       position: fixed;
       bottom: 0;
       left: 0;
       right: 0;
-      height: 86px;
-      background: rgba(10,10,10,0.8);
-      backdrop-filter: blur(20px);
+      height: 84px;
+      background: rgba(10,10,10,0.7);
+      backdrop-filter: blur(24px);
       border-top: 1px solid var(--border);
       display: flex;
       justify-content: space-around;
       align-items: center;
-      z-index: 300;
+      z-index: 400;
       padding-bottom: env(safe-area-inset-bottom, 0);
     }
-    .tabbar-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--text-muted); font-size: 11px; cursor: pointer; min-width: 60px; }
-    .tabbar-item.active { color: var(--accent); }
-    .tabbar-icon { font-size: 24px; }
-    .cat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 12px; }
-    .cat-btn { padding: 10px 6px; border: 1px solid var(--border); border-radius: 12px; background: #0a0a0a; color: var(--text); font-size: 13px; cursor: pointer; text-align: center; }
-    .cat-btn.active { border-color: var(--accent); color: var(--accent); background: rgba(255,159,0,0.1); }
-    .status { margin-top: 10px; font-size: 13px; color: var(--success); min-height: 16px; }
-    .status.error { color: var(--danger); }
-    .hint { font-size: 11px; color: var(--text-muted); margin-top: 6px; text-align: center; }
+    .tabbar-item { display: flex; flex-direction: column; align-items: center; gap: 5px; color: var(--text-muted); font-size: 11px; cursor: pointer; min-width: 64px; transition: color 0.2s; }
+    .tabbar-item.active { color: var(--accent); text-shadow: 0 0 16px rgba(255,159,0,0.4); }
+    .tabbar-icon { font-size: 25px; }
+    .tabbar-item.active .tabbar-icon { filter: drop-shadow(0 0 8px rgba(255,159,0,0.5)); }
+
   </style>
 </head>
 <body>
+
+  <!-- Декоративный фон -->
+  <div class="bg-mesh">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <!-- Абстрактные человекообразные фигуры -->
+  <div class="figures">
+    <svg class="figure fig-person-1" viewBox="0 0 200 300" preserveAspectRatio="none">
+      <path d="M 100 20 C 120 20 150 40 150 80 C 150 120 130 180 100 200 C 70 180 50 120 50 80 C 50 40 80 20 100 20 Z" fill="#ff9f00" opacity="0.9"/>
+      <ellipse cx="100" cy="40" rx="18" ry="20" fill="#ffcc00"/>
+      <path d="M 80 140 L 100 160 L 120 140" stroke="#ff6b00" stroke-width="8" fill="none" stroke-linecap="round"/>
+    </svg>
+    <svg class="figure fig-person-2" viewBox="0 0 160 240" preserveAspectRatio="none">
+      <path d="M 80 40 C 95 40 115 55 115 85 C 115 115 100 145 80 155 C 60 145 45 115 45 85 C 45 55 65 40 80 40 Z" fill="#ff6b00" opacity="0.85"/>
+      <ellipse cx="80" cy="60" rx="14" ry="16" fill="#ffcc00"/>
+    </svg>
+  </div>
+
   <header>
     <span class="app-title">Бюджет</span>
     <select class="period-select" id="periodSelect"></select>
   </header>
 
+  <!-- Главная -->
   <section class="screen active" id="screen-home">
     <div class="card big">
       <div class="card-title">Остаток на период</div>
@@ -215,6 +319,7 @@
     </div>
   </section>
 
+  <!-- Операции -->
   <section class="screen" id="screen-ops">
     <div class="card">
       <div class="card-title">Все операции за период</div>
@@ -222,12 +327,13 @@
     </div>
   </section>
 
+  <!-- График -->
   <section class="screen" id="screen-chart">
     <div class="card">
       <div class="card-title">Расходы по категориям</div>
       <div class="chart-wrap">
         <div class="chart-container">
-          <canvas id="pieChart" width="240" height="240"></canvas>
+          <canvas id="pieChart" width="260" height="260"></canvas>
           <div class="chart-center">
             <div class="chart-total" id="chartTotal">0 ₽</div>
             <div class="chart-label" id="chartLabel">всего трат</div>
@@ -238,21 +344,23 @@
     </div>
   </section>
 
+  <!-- Настройки / лимиты -->
   <section class="screen" id="screen-settings">
     <div class="card">
-      <div class="card-title">Лимиты по категориям (текущий период)</div>
+      <div class="card-title">Лимиты по категориям</div>
       <div id="limitsList"></div>
-      <div class="hint">Изменение лимита применяется к текущему бюджетному месяцу (с 10-го по 10-е).</div>
+      <div class="hint">Бюджетный месяц: с 10-го по 10-е. Лимит можно скорректировать в любой момент.</div>
     </div>
     <div class="card">
-      <div class="card-title">Импорт из таблицы</div>
-      <p style="font-size:13px;color:var(--text-muted);margin-bottom:12px;">Все операции из Google Таблицы автоматически загружаются в приложение.</p>
+      <div class="card-title">Источник данных</div>
+      <p style="font-size:12px;color:var(--text-muted);margin-bottom:12px;">Все операции синхронизируются с вашей Google Таблицей.</p>
       <button class="btn-primary" id="btnImport">Обновить данные из таблицы</button>
     </div>
   </section>
 
   <button class="fab" id="fabAdd">+</button>
 
+  <!-- Модалка -->
   <div class="modal-overlay" id="modalOverlay">
     <div class="modal" id="modal">
       <div class="modal-title" id="modalTitle">Новая операция</div>
@@ -390,7 +498,7 @@
       els.homeOps.innerHTML = '';
       const arr = Object.entries(byCat).sort((a,b) => b[1]-a[1]).slice(0, 4);
       if (arr.length === 0) {
-        els.homeOps.innerHTML = '<div class="empty"><span class="empty-icon">📭</span>Ещё нет операций</div>';
+        els.homeOps.innerHTML = '<div class="empty"><span class="empty-icon">📭</span><div class="empty-text">Ещё нет операций</div><div class="empty-sub">Нажмите +, чтобы добавить первую</div></div>';
         return;
       }
       arr.forEach(([cat, amt]) => {
@@ -415,7 +523,7 @@
     function renderOpsFull(ops) {
       els.opsList.innerHTML = '';
       if (ops.length === 0) {
-        els.opsList.innerHTML = '<div class="empty"><span class="empty-icon">📭</span>Операций нет</div>';
+        els.opsList.innerHTML = '<div class="empty"><span class="empty-icon">📭</span><div class="empty-text">Операций нет</div></div>';
         return;
       }
       ops.forEach(op => {
@@ -451,9 +559,9 @@
     function drawPieChart(data, total) {
       const canvas = document.getElementById('pieChart');
       const ctx = canvas.getContext('2d');
-      const center = 120, radius = 100;
+      const center = 130, radius = 105;
       let start = -Math.PI / 2;
-      const colors = ['#ff9f00','#ff6b00','#ff453a','#00d97a','#ffcc00','#5ac8fa','#af52de','#ff375f'];
+      const colors = ['#ff9f00','#ff6b00','#ff453a','#ffcc00','#5ac8fa','#af52de','#ff375f','#00d97a'];
       let i = 0;
       data.forEach(([cat, amt]) => {
         const slice = (amt / total) * 2 * Math.PI;
@@ -467,17 +575,17 @@
         i++;
       });
       if (data.length === 0) {
-        ctx.fillStyle = '#2a2a2a';
+        ctx.fillStyle = 'rgba(255,255,255,0.06)';
         ctx.beginPath(); ctx.arc(center, center, radius, 0, 2*Math.PI); ctx.fill();
       }
     }
     function renderLegend(data) {
       els.chartLegend.innerHTML = '';
-      const colors = ['#ff9f00','#ff6b00','#ff453a','#00d97a','#ffcc00','#5ac8fa','#af52de','#ff375f'];
+      const colors = ['#ff9f00','#ff6b00','#ff453a','#ffcc00','#5ac8fa','#af52de','#ff375f','#00d97a'];
       data.forEach(([cat, amt], i) => {
         const el = document.createElement('div');
         el.className = 'legend-item';
-        el.innerHTML = `<div class="legend-dot" style="background:${colors[i % colors.length]}"></div><span>${escapeHtml(cat)}: ${formatMoney(amt)} ₽</span>`;
+        el.innerHTML = `<div class="legend-dot" style="background:${colors[i % colors.length]}; box-shadow: 0 0 10px ${colors[i % colors.length]}"></div><span>${escapeHtml(cat)}: ${formatMoney(amt)} ₽</span>`;
         els.chartLegend.appendChild(el);
       });
     }
@@ -505,21 +613,6 @@
       await api('setLimit', { category: cat, amount: n, period: currentPeriod });
       loadSettings();
     }
-    function openModal(isEdit = false, op = null) {
-      editingId = isEdit ? op.id : null;
-      els.modalTitle.textContent = isEdit ? 'Редактировать' : 'Новая операция';
-      selectedCategory = isEdit ? op.category : null;
-      els.modalCategory.value = selectedCategory || '';
-      els.modalAmount.value = isEdit ? op.amount : '';
-      els.modalComment.value = isEdit ? op.comment : '';
-      els.modalDate.value = isEdit ? op.date : new Date().toISOString().split('T')[0];
-      renderCatGrid(selectedCategory);
-      els.modalStatus.textContent = '';
-      els.modalOverlay.classList.add('open');
-    }
-    function closeModal() { els.modalOverlay.classList.remove('open'); editingId = null; selectedCategory = null; }
-    els.modalCancel.addEventListener('click', closeModal);
-    els.modalOverlay.addEventListener('click', e => { if (e.target === els.modalOverlay) closeModal(); });
     function renderCatGrid(selected) {
       els.modalCatGrid.innerHTML = '';
       Object.entries(categories).forEach(([cat]) => {
@@ -535,6 +628,24 @@
         els.modalCatGrid.appendChild(btn);
       });
     }
+    function openModal(isEdit = false, op = null) {
+      if (Object.keys(categories).length === 0) {
+        tg.showAlert('Категории ещё не загружены. Подождите немного.');
+        return;
+      }
+      editingId = isEdit ? op.id : null;
+      selectedCategory = isEdit ? op.category : null;
+      els.modalCategory.value = selectedCategory || '';
+      els.modalAmount.value = isEdit ? op.amount : '';
+      els.modalComment.value = isEdit ? op.comment : '';
+      els.modalDate.value = isEdit ? op.date : new Date().toISOString().split('T')[0];
+      renderCatGrid(selectedCategory);
+      els.modalStatus.textContent = '';
+      els.modalOverlay.classList.add('open');
+    }
+    function closeModal() { els.modalOverlay.classList.remove('open'); editingId = null; selectedCategory = null; }
+    els.modalCancel.addEventListener('click', closeModal);
+    els.modalOverlay.addEventListener('click', e => { if (e.target === els.modalOverlay) closeModal(); });
     els.fabAdd.addEventListener('click', () => openModal(false));
     els.modalSave.addEventListener('click', async () => {
       const cat = selectedCategory;
@@ -585,12 +696,11 @@
       await loadPeriods();
       const r = await api('getCategories');
       categories = r.categories || {};
-      renderCatGrid(null);
       loadAll();
     }
     init();
     function escapeHtml(s) { return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
-    function showStatus(msg, type) { /* для совместимости */ }
+    function showStatus(msg, type) {}
   </script>
 </body>
 </html>
